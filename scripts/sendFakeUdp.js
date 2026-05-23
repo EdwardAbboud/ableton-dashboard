@@ -12,6 +12,7 @@ const packet = {
     sixteenth: 4,
     timeSignature: "4/4",
     scene: "FAKE UDP TEST",
+    position: 24.5,
     progress: 0.78,
   },
   signal: {

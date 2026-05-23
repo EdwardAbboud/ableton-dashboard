@@ -8,7 +8,8 @@
     "dev": "npm run server & npm run client",
     "start:server": "npm run server",
     "start:client": "npm run client",
-    "test:udp": "node scripts/sendFakeUdp.js"
+    "test:udp": "node scripts/sendFakeUdp.js",
+    "test:osc": "node scripts/sendFakeOsc.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.0",

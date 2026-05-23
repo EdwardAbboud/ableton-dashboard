@@ -15,7 +15,8 @@ const initialAvState = {
     sixteenth: 2,
     timeSignature: "4/4",
     scene: "DROP 1",
-    progress: 0.62,
+    position: 0,
+    progress: null,
   },
   signal: {
     master: 0.72,
@@ -82,6 +83,7 @@ function mergeIncomingState(message) {
         "sixteenth",
         "timeSignature",
         "scene",
+        "position",
         "progress",
       ]),
     },
@@ -207,15 +209,17 @@ function normalizeValue(key, value) {
     return clamp01(value);
   }
 
-  if (["master", "peak", "rms", "bass", "mid", "high", "progress", "intensity", "color", "motion", "particles", "glow", "strobe", "manual"].includes(key)) {
+  if (["master", "peak", "rms", "bass", "mid", "high", "intensity", "color", "motion", "particles", "glow", "strobe", "manual"].includes(key)) {
     return clamp01(value);
   }
 
-  if (["bpm", "bar", "beat", "sixteenth", "fps", "latencyMs", "lastPacketMs", "droppedPackets"].includes(key)) {
+  if (["bpm", "bar", "beat", "sixteenth", "position", "progress", "fps", "latencyMs", "lastPacketMs", "droppedPackets"].includes(key)) {
     return Number.isFinite(Number(value)) ? Number(value) : 0;
   }
 
   if (["playing", "clipping"].includes(key)) {
+    if (value === 1 || value === "1") return true;
+    if (value === 0 || value === "0") return false;
     return Boolean(value);
   }
 
