@@ -1,18 +1,60 @@
 import React from "react";
-import { MeterRow } from "./MeterRow.jsx";
 
-const macroNames = ["intensity", "color", "motion", "particles", "glow", "strobe", "scene", "manual"];
+const macroRows = [
+  ["intensity", "Intensity"],
+  ["color", "Color"],
+  ["motion", "Motion"],
+  ["particles", "Particles"],
+  ["glow", "Glow"],
+  ["strobe", "Strobe"],
+  ["sceneBlend", "Scene Blend"],
+  ["manual", "Manual"],
+];
 
-export function MacrosTab({ macros }) {
+export function MacrosTab({ visualMacros, onChange }) {
   return (
     <div className="av-section">
-      {macroNames.map((name) => (
-        <MeterRow key={name} label={toTitleCase(name)} value={macros[name]} format="percent" />
+      {macroRows.map(([name, label]) => (
+        <MacroSlider
+          key={name}
+          label={label}
+          value={visualMacros[name]}
+          onChange={(value) => {
+            onChange((current) => ({
+              ...current,
+              [name]: value,
+            }));
+          }}
+        />
       ))}
     </div>
   );
 }
 
-function toTitleCase(value) {
-  return value.charAt(0).toUpperCase() + value.slice(1);
+function MacroSlider({ label, value, onChange }) {
+  const safeValue = clamp01(value);
+
+  return (
+    <label className="av-macro-control">
+      <span className="av-macro-top">
+        <span className="av-macro-label">{label}</span>
+        <span className="av-macro-value">{Math.round(safeValue * 100)}%</span>
+      </span>
+      <input
+        className="av-macro-slider"
+        type="range"
+        min="0"
+        max="1"
+        step="0.001"
+        value={safeValue}
+        onChange={(event) => onChange(Number(event.target.value))}
+      />
+    </label>
+  );
+}
+
+function clamp01(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return 0;
+  return Math.max(0, Math.min(1, number));
 }

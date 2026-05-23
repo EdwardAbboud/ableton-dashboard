@@ -1,16 +1,12 @@
 import React from "react";
-import { MeterRow, clamp01 } from "./MeterRow.jsx";
-
-export function TransportTab({ transport }) {
+export function TransportTab({ transport, liveTimeMs = 0 }) {
   const rows = [
     ["Status", transport.playing ? "Playing" : "Stopped"],
+    ["Live Time", formatLiveTime(liveTimeMs)],
     ["BPM", transport.bpm],
     ["Bar", transport.bar],
     ["Beat", transport.beat],
-    ["Sixteenth", transport.sixteenth],
-    ["Signature", transport.timeSignature],
     ["Scene", transport.scene],
-    ["Progress", `${Math.round(clamp01(transport.progress) * 100)}%`],
   ];
 
   return (
@@ -21,7 +17,15 @@ export function TransportTab({ transport }) {
           <span className="av-data-value">{value}</span>
         </div>
       ))}
-      <MeterRow label="Progress" value={transport.progress} format="percent" />
     </div>
   );
+}
+
+function formatLiveTime(milliseconds) {
+  const safeMilliseconds = Math.max(0, Number(milliseconds) || 0);
+  const minutes = Math.floor(safeMilliseconds / 60000);
+  const seconds = Math.floor((safeMilliseconds % 60000) / 1000);
+  const ms = Math.floor(safeMilliseconds % 1000);
+
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${String(ms).padStart(3, "0")}`;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-const tabs = ["Transport", "Signal", "Tracks", "Macros", "Debug"];
+const tabs = ["Transport", "Signal", "Macros", "Debug"];
 
 export function TabNav({ activeTab, onChange }) {
   return (

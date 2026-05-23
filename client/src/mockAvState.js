@@ -13,7 +13,8 @@ export const mockAvState = {
     sixteenth: 2,
     timeSignature: "4/4",
     scene: "DROP 1",
-    progress: 0.62,
+    position: 12.375,
+    progress: null,
   },
   signal: {
     master: 0.72,
@@ -50,16 +51,7 @@ export const mockAvState = {
       clip: "Vocal Chop",
     },
   ],
-  macros: {
-    intensity: 0.75,
-    color: 0.2,
-    motion: 0.5,
-    particles: 0.9,
-    glow: 0.4,
-    strobe: 0.1,
-    scene: 0.6,
-    manual: 0,
-  },
+  macros: {},
   debug: {
     fps: 60,
     websocket: "active",

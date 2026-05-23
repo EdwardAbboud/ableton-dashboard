@@ -3,7 +3,7 @@ import { MeterRow } from "./MeterRow.jsx";
 
 export function SignalTab({ signal }) {
   const rows = [
-    ["Master", signal.master],
+    ["Volume", signal.master],
     ["Peak", signal.peak],
     ["RMS", signal.rms],
     ["Bass", signal.bass],
